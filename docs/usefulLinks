@@ -1,0 +1,10 @@
+-Envibus javascript page code:
+http://www.envibus.fr/fileadmin/template/js/moncompte.js
+-Envibus ticket api website:
+http://catp-envibus.airweb.fr/feed/api/
+-Grab all stations (and positions):
+http://catp-envibus.airweb.fr/feed/Station/getAllStations.json
+-Web working interface (it was taken from the app):
+http://www.envibus.fr/flux.html?page=passages
+-POST request / response page: (i.e key: id_arret value: 794)
+http://www.envibus.fr/flux.html?page=passages&dklik_boutique%5Baction%5D=select_arret
