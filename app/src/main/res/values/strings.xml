@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">enviMove</string>
+
+    <string name="title_map">Map</string>
+    <string name="title_search">Search</string>
+    <string name="title_fav">Favorites</string>
+    <string name="title_alert">Alerts</string>
+    <string name="title_settings">Settings</string>
 </resources>
