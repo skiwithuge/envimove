@@ -7,6 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.skiwithuge.envimove.Fragment.AlertFragment;
 import com.skiwithuge.envimove.Fragment.FavFragment;
 import com.skiwithuge.envimove.Fragment.LineFragment;
@@ -15,7 +20,7 @@ import com.skiwithuge.envimove.Fragment.SettingsFragment;
 import com.skiwithuge.envimove.R;
 
 public class MainActivity extends AppCompatActivity implements
-        BottomNavigationView.OnNavigationItemSelectedListener {
+        BottomNavigationView.OnNavigationItemSelectedListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,4 +62,6 @@ public class MainActivity extends AppCompatActivity implements
                 .replace(R.id.fragment_container, fragment)
                 .commit();
     }
+
+
 }
