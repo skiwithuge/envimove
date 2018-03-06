@@ -17,6 +17,8 @@ import com.skiwithuge.envimove.Fragment.FavFragment;
 import com.skiwithuge.envimove.Fragment.LineFragment;
 import com.skiwithuge.envimove.Fragment.MapFragment;
 import com.skiwithuge.envimove.Fragment.SettingsFragment;
+import com.skiwithuge.envimove.Model.BusStopList;
+import com.skiwithuge.envimove.MyApplication;
 import com.skiwithuge.envimove.R;
 
 public class MainActivity extends AppCompatActivity implements
@@ -27,12 +29,13 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView bottomNavigationView;
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-        bottomNavigationView.setSelectedItemId(R.id.navigation_map);
-        bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
-        if(savedInstanceState == null)
-            replaceMainFragment(new MapFragment());
+        if(savedInstanceState == null) {
+            bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+            bottomNavigationView.setSelectedItemId(R.id.navigation_bus);
+            bottomNavigationView.setOnNavigationItemSelectedListener(this);
+            replaceMainFragment(new LineFragment());
+        }
     }
 
     @Override
