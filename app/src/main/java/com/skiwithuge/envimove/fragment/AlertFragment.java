@@ -1,4 +1,4 @@
-package com.skiwithuge.envimove.Fragment;
+package com.skiwithuge.envimove.fragment;
 
 /**
  * Created by skiwi on 2/7/18.

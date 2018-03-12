@@ -3,7 +3,7 @@ package com.skiwithuge.envimove;
 import android.app.Application;
 
 import com.google.gson.Gson;
-import com.skiwithuge.envimove.Model.BusStopList;
+import com.skiwithuge.envimove.model.BusStopList;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +28,7 @@ public class MyApplication extends Application{
     public void fillBusStopList(){
         String myJson = inputStreamToString(this.getResources().openRawResource(R.raw.all_stations_cleaned));
         mBusStopList = new Gson().fromJson(myJson, BusStopList.class);
+        mBusStopList.initializeMarkers();
     }
 
     public String inputStreamToString(InputStream inputStream) {

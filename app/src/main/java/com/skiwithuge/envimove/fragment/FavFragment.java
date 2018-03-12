@@ -1,4 +1,4 @@
-package com.skiwithuge.envimove.Fragment;
+package com.skiwithuge.envimove.fragment;
 
 import android.support.v4.app.Fragment;
 
