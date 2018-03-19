@@ -45,8 +45,8 @@ public class BusStopList {
     }
 
     public void initializeMarkers() {
-        for (BusStop arret: mList) {
-            arret.marker = new LatLng(arret.latitude,arret.longitude);
+        for (BusStop b: mList) {
+            b.marker = new LatLng(b.latitude,b.longitude);
         }
     }
 

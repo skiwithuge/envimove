@@ -1,9 +1,11 @@
 package com.skiwithuge.envimove.interfaces;
 
+import com.skiwithuge.envimove.model.BusStopList.BusStop;
+
 /**
- * Created by skiwi on 3/12/18.
+ * Created by skiwi on 3/19/18.
  */
 
-public interface OnBusStopClickListener<T> {
-    void onBusStopClick(T item);
+public interface OnBusStopClickListener {
+    void onBusStopSelected(BusStop b);
 }

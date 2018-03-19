@@ -1,5 +1,6 @@
 package com.skiwithuge.envimove.fragment;
 
+import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -20,23 +21,32 @@ import com.skiwithuge.envimove.MyApplication;
 import com.skiwithuge.envimove.R;
 import com.skiwithuge.envimove.Util.Locator;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by skiwi on 2/7/18.
  */
 
 public class LineFragment extends Fragment implements OnItemClickListener<BusStopList.BusStop>{
     BusStopList mList;
-    LocationManager mLocationManager;
-    RecyclerView mBusStopRecyclerView;
+    @BindView(R.id.day_recycler_view)RecyclerView mBusStopRecyclerView;
     private BusStopAdapter mAdapter;
     private OnBusStopClickListener mOnBusStopClickListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mOnBusStopClickListener = (OnBusStopClickListener) context;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_line, container, false);
-        mBusStopRecyclerView = v.findViewById(R.id.day_recycler_view);
+        ButterKnife.bind(this, v);
 
         return v;
     }
@@ -44,21 +54,16 @@ public class LineFragment extends Fragment implements OnItemClickListener<BusSto
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         mBusStopRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
         mList = MyApplication.getBusStopList();
-//        WebView webView = (WebView) getView().findViewById(R.id.webView);
-//        webView.getSettings().setJavaScriptEnabled(true);
-//        webView.loadUrl("http://www.envibus.fr/flux.html?page=passages");
         Locator lm = new Locator(this.getContext());
         lm.getLocation(Locator.Method.NETWORK_THEN_GPS, new LineLocator());
 
+        updateUI();
+    }
 
+    private void updateUI() {
         if (mAdapter == null) {
             mAdapter = new BusStopAdapter(mList, this);
             mBusStopRecyclerView.setAdapter(mAdapter);
@@ -71,7 +76,7 @@ public class LineFragment extends Fragment implements OnItemClickListener<BusSto
 
     @Override
     public void onItemClick(BusStopList.BusStop item) {
-        mOnBusStopClickListener.onBusStopClick(item);
+        mOnBusStopClickListener.onBusStopSelected(item);
     }
 
     public class LineLocator implements Locator.Listener{

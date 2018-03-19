@@ -1,5 +1,6 @@
 package com.skiwithuge.envimove.adapter;
 
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,9 @@ import com.skiwithuge.envimove.interfaces.OnItemClickListener;
 import com.skiwithuge.envimove.model.BusStopList;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class BusStopAdapter extends RecyclerView.Adapter<BusStopAdapter.BusStopHolder> {
 
@@ -45,10 +49,12 @@ public class BusStopAdapter extends RecyclerView.Adapter<BusStopAdapter.BusStopH
     }
 
     class BusStopHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.bus_stop_name)
         TextView mTitle;
 
         public BusStopHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         void bindBusStop(final BusStopList.BusStop busStop) {
@@ -59,10 +65,8 @@ public class BusStopAdapter extends RecyclerView.Adapter<BusStopAdapter.BusStopH
                 }
             });
 
-//            mDate.setText(Long.toString(day.getDate()));
-//            mTitle.setText(day.getTitle());
-            mTitle = itemView.findViewById(R.id.card_title);
             mTitle.setText(busStop.name);
         }
+
     }
 }

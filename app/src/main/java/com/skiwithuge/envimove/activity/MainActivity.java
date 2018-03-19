@@ -1,5 +1,6 @@
 package com.skiwithuge.envimove.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -13,18 +14,25 @@ import com.skiwithuge.envimove.fragment.LineFragment;
 import com.skiwithuge.envimove.fragment.MapFragment;
 import com.skiwithuge.envimove.fragment.SettingsFragment;
 import com.skiwithuge.envimove.R;
+import com.skiwithuge.envimove.interfaces.OnBusStopClickListener;
+import com.skiwithuge.envimove.model.BusStopList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements
-        BottomNavigationView.OnNavigationItemSelectedListener{
+        BottomNavigationView.OnNavigationItemSelectedListener, OnBusStopClickListener{
+    @BindView(R.id.navigation) BottomNavigationView bottomNavigationView;
+
+    public final static String ENVID = "envID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView bottomNavigationView;
+        ButterKnife.bind(this);
 
         if(savedInstanceState == null) {
-            bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
             bottomNavigationView.setSelectedItemId(R.id.navigation_bus);
             bottomNavigationView.setOnNavigationItemSelectedListener(this);
             replaceMainFragment(new LineFragment());
@@ -60,4 +68,10 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
+    @Override
+    public void onBusStopSelected(BusStopList.BusStop b) {
+        Intent myIntent = new Intent(this, BusStopActivity.class);
+        myIntent.putExtra(ENVID, b.env_id);
+        this.startActivity(myIntent);
+    }
 }
