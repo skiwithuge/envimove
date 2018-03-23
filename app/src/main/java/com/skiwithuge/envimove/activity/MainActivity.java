@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
         if(savedInstanceState == null) {
             bottomNavigationView.setSelectedItemId(R.id.navigation_bus);
-            bottomNavigationView.setOnNavigationItemSelectedListener(this);
             replaceMainFragment(new LineFragment());
         }
     }
