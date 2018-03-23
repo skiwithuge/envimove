@@ -8,9 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.skiwithuge.envimove.adapter.BusStopAdapter;
@@ -31,6 +34,8 @@ import butterknife.ButterKnife;
 public class LineFragment extends Fragment implements OnItemClickListener<BusStopList.BusStop>{
     BusStopList mList;
     @BindView(R.id.day_recycler_view)RecyclerView mBusStopRecyclerView;
+    @BindView(R.id.search_bus)
+    EditText mSearchBus;
     private BusStopAdapter mAdapter;
     private OnBusStopClickListener mOnBusStopClickListener;
 
@@ -61,6 +66,23 @@ public class LineFragment extends Fragment implements OnItemClickListener<BusSto
         lm.getLocation(Locator.Method.NETWORK_THEN_GPS, new LineLocator());
 
         updateUI();
+
+        mSearchBus.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence constraint, int i, int i1, int i2) {
+                mAdapter.getFilter().filter(constraint);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence constraint, int i, int i1, int i2) {
+                mAdapter.getFilter().filter(constraint);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void updateUI() {
