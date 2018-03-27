@@ -2,6 +2,7 @@ package com.skiwithuge.envimove.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 
@@ -17,8 +18,8 @@ import butterknife.ButterKnife;
  */
 
 public class BusStopActivity extends AppCompatActivity {
-    @BindView(R.id.webView)
-    WebView webView;
+    @BindView(R.id.webView) WebView webView;
+    @BindView(R.id.swipeRefresh)SwipeRefreshLayout mySwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +29,24 @@ public class BusStopActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int[] envIds = intent.getIntArrayExtra(MainActivity.ENVID);
-        String s = "id_arret=" + Arrays.toString(envIds).replace(" ","")
+        final String s = "id_arret=" + Arrays.toString(envIds).replace(" ","")
                 .replace("[","").replace("]","");
+        reloadPage(s);
+        mySwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        reloadPage(s);
+                        mySwipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+        );
+    }
 
+    void reloadPage(String s){
         webView.postUrl("http://www.envibus.fr/flux.html?page=passages&dklik_boutique%5Baction%5D=select_arret",
                 s.getBytes());
     }
+
 
 }
