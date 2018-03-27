@@ -6,6 +6,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -33,11 +34,12 @@ import butterknife.ButterKnife;
 
 public class LineFragment extends Fragment implements OnItemClickListener<BusStopList.BusStop>{
     BusStopList mList;
-    @BindView(R.id.day_recycler_view)RecyclerView mBusStopRecyclerView;
-    @BindView(R.id.search_bus)
-    EditText mSearchBus;
+    @BindView(R.id.day_recycler_view) RecyclerView mBusStopRecyclerView;
+    @BindView(R.id.search_bus) EditText mSearchBus;
+    @BindView(R.id.swipeRefresh)SwipeRefreshLayout mySwipeRefreshLayout;
     private BusStopAdapter mAdapter;
     private OnBusStopClickListener mOnBusStopClickListener;
+
 
     @Override
     public void onAttach(Context context) {
@@ -62,9 +64,6 @@ public class LineFragment extends Fragment implements OnItemClickListener<BusSto
         mBusStopRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mList = MyApplication.getBusStopList();
-        Locator lm = new Locator(this.getContext());
-        lm.getLocation(Locator.Method.NETWORK_THEN_GPS, new LineLocator());
-
         updateUI();
 
         mSearchBus.addTextChangedListener(new TextWatcher() {
@@ -83,9 +82,22 @@ public class LineFragment extends Fragment implements OnItemClickListener<BusSto
 
             }
         });
+
+        mySwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        updateUI();
+                        mySwipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+        );
     }
 
     private void updateUI() {
+        Locator lm = new Locator(this.getContext());
+        lm.getLocation(Locator.Method.NETWORK_THEN_GPS, new LineLocator());
+
         if (mAdapter == null) {
             mAdapter = new BusStopAdapter(mList, this);
             mBusStopRecyclerView.setAdapter(mAdapter);
