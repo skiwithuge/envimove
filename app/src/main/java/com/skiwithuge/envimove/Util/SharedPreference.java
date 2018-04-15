@@ -1,4 +1,4 @@
-package com.skiwithuge.envimove.model;
+package com.skiwithuge.envimove.Util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import com.google.gson.Gson;
+import com.skiwithuge.envimove.model.BusStopList;
 
 public class SharedPreference {
 

@@ -7,9 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.skiwithuge.envimove.adapter.BusStopAdapter;
 import com.skiwithuge.envimove.fragment.AlertFragment;
 import com.skiwithuge.envimove.fragment.FavFragment;
 import com.skiwithuge.envimove.fragment.LineFragment;
@@ -18,9 +16,7 @@ import com.skiwithuge.envimove.fragment.SettingsFragment;
 import com.skiwithuge.envimove.R;
 import com.skiwithuge.envimove.interfaces.OnBusStopClickListener;
 import com.skiwithuge.envimove.model.BusStopList;
-import com.skiwithuge.envimove.model.SharedPreference;
-
-import java.util.List;
+import com.skiwithuge.envimove.Util.SharedPreference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
