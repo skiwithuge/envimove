@@ -113,6 +113,11 @@ public class LineFragment extends Fragment implements OnItemClickListener<BusSto
         mOnBusStopClickListener.onBusStopSelected(item);
     }
 
+    @Override
+    public void onFavClick(BusStopList.BusStop item) {
+        mOnBusStopClickListener.onFavSelected(item);
+    }
+
     public class LineLocator implements Locator.Listener{
         @Override
         public void onLocationFound(Location location) {

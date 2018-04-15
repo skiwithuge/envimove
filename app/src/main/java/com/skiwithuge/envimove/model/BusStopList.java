@@ -1,11 +1,14 @@
 package com.skiwithuge.envimove.model;
 
+import android.content.Context;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import com.google.maps.android.SphericalUtil;
 
@@ -52,6 +55,21 @@ public class BusStopList {
 
     public void orderFromPosition(LatLng myPos){
         Collections.sort(mList, new BusStopDistanceComparator(myPos));
+    }
+
+    public static boolean checkFavoriteItem(BusStopList.BusStop checkProduct, SharedPreference sp,
+                                            Context context) {
+        boolean check = false;
+        List<BusStop> favorites = sp.getFavorites(context);
+        if (favorites != null) {
+            for (BusStopList.BusStop product : favorites) {
+                if (product.name.equals(checkProduct.name)) {
+                    check = true;
+                    break;
+                }
+            }
+        }
+        return check;
     }
 
     public class BusStopDistanceComparator implements Comparator<BusStop> {

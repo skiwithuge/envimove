@@ -7,7 +7,9 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.skiwithuge.envimove.adapter.BusStopAdapter;
 import com.skiwithuge.envimove.fragment.AlertFragment;
 import com.skiwithuge.envimove.fragment.FavFragment;
 import com.skiwithuge.envimove.fragment.LineFragment;
@@ -16,6 +18,9 @@ import com.skiwithuge.envimove.fragment.SettingsFragment;
 import com.skiwithuge.envimove.R;
 import com.skiwithuge.envimove.interfaces.OnBusStopClickListener;
 import com.skiwithuge.envimove.model.BusStopList;
+import com.skiwithuge.envimove.model.SharedPreference;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements
     @BindView(R.id.navigation) BottomNavigationView bottomNavigationView;
 
     public final static String ENVID = "envID";
+    SharedPreference mSharedPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements
             bottomNavigationView.setSelectedItemId(R.id.navigation_bus);
             replaceMainFragment(new LineFragment());
         }
+        mSharedPreference = new SharedPreference();
     }
 
     @Override
@@ -74,4 +81,14 @@ public class MainActivity extends AppCompatActivity implements
         myIntent.putExtra(ENVID, b.env_id);
         this.startActivity(myIntent);
     }
+
+    @Override
+    public void onFavSelected(BusStopList.BusStop b) {
+        if( !BusStopList.checkFavoriteItem(b, mSharedPreference,this) )
+            mSharedPreference.addFavorite(this, b);
+        else
+            mSharedPreference.removeFavorite(this, b);
+
+    }
+
 }

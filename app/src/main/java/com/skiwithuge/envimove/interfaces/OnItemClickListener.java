@@ -6,4 +6,5 @@ package com.skiwithuge.envimove.interfaces;
 
 public interface OnItemClickListener<T> {
     void onItemClick(T item);
+    void onFavClick(T item);
 }

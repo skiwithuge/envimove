@@ -4,6 +4,7 @@
  */
 package com.skiwithuge.envimove.adapter;
 
+import android.content.Context;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,11 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.skiwithuge.envimove.R;
 import com.skiwithuge.envimove.interfaces.OnItemClickListener;
 import com.skiwithuge.envimove.model.BusStopList;
+import com.skiwithuge.envimove.model.SharedPreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,21 +29,26 @@ import butterknife.ButterKnife;
 public class BusStopAdapter extends RecyclerView.Adapter<BusStopAdapter.BusStopHolder>
         implements Filterable {
 
+    private Context context;
     private BusStopList busAsset;
     private BusStopList busStopsFilter;
     private OnItemClickListener<BusStopList.BusStop> listener;
     private ValueFilter valueFilter;
+    private SharedPreference mSharedPreference;
+
 
     public BusStopAdapter(BusStopList busStops,
                           OnItemClickListener<BusStopList.BusStop> listener) {
         this.busAsset = busStops;
         this.busStopsFilter = busStops;
         this.listener = listener;
+        this.mSharedPreference = new SharedPreference();
     }
 
     @Override
     public BusStopHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        this.context = parent.getContext();
         View view = layoutInflater.inflate(R.layout.list_item_bus_stop, parent, false);
         return new BusStopHolder(view);
     }
@@ -62,6 +70,8 @@ public class BusStopAdapter extends RecyclerView.Adapter<BusStopAdapter.BusStopH
     class BusStopHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.bus_stop_name)
         TextView mTitle;
+        @BindView(R.id.ic_fav)
+        ImageView mFav;
 
         public BusStopHolder(View itemView) {
             super(itemView);
@@ -69,14 +79,28 @@ public class BusStopAdapter extends RecyclerView.Adapter<BusStopAdapter.BusStopH
         }
 
         void bindBusStop(final BusStopList.BusStop busStop) {
-            itemView.setOnClickListener(new View.OnClickListener() {
+            mTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listener != null) listener.onItemClick(busStop);
                 }
             });
 
+            mFav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) listener.onFavClick(busStop);
+                    notifyDataSetChanged();
+                }
+            });
+
             mTitle.setText(busStop.name);
+
+            if (BusStopList.checkFavoriteItem(busStop,mSharedPreference,context))
+                mFav.setImageResource(R.drawable.ic_favorite_red_a700_24dp);
+            else
+                mFav.setImageResource(R.drawable.ic_favorite_border_red_a700_24dp);
+
         }
     }
 

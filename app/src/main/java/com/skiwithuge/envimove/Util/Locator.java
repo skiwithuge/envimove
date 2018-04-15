@@ -71,6 +71,7 @@ public class Locator implements LocationListener {
                 @SuppressLint("MissingPermission") Location networkLocation = this.locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 if (networkLocation != null) {
                     Log.d(LOG_TAG, "Last known location found for network provider : " + networkLocation.toString());
+                    this.requestUpdates(LocationManager.NETWORK_PROVIDER);
                     this.callback.onLocationFound(networkLocation);
                 } else {
                     Log.d(LOG_TAG, "Request updates from network provider.");
@@ -81,6 +82,7 @@ public class Locator implements LocationListener {
                 @SuppressLint("MissingPermission") Location gpsLocation = this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if (gpsLocation != null) {
                     Log.d(LOG_TAG, "Last known location found for GPS provider : " + gpsLocation.toString());
+                    this.requestUpdates(LocationManager.GPS_PROVIDER);
                     this.callback.onLocationFound(gpsLocation);
                 } else {
                     Log.d(LOG_TAG, "Request updates from GPS provider.");

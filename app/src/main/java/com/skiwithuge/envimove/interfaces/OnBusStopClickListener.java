@@ -8,4 +8,5 @@ import com.skiwithuge.envimove.model.BusStopList.BusStop;
 
 public interface OnBusStopClickListener {
     void onBusStopSelected(BusStop b);
+    void onFavSelected(BusStop b);
 }
