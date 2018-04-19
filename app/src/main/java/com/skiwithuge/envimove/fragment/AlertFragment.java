@@ -6,6 +6,7 @@ package com.skiwithuge.envimove.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
 public class AlertFragment extends Fragment {
     @BindView(R.id.webView) WebView webView;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_alert, container, false);
@@ -32,7 +33,7 @@ public class AlertFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("http://www.envibus.fr/alertes-trafic.html");

@@ -5,6 +5,7 @@
 package com.skiwithuge.envimove.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,8 +44,9 @@ public class BusStopAdapter extends RecyclerView.Adapter<BusStopAdapter.BusStopH
         this.mSharedPreference = new SharedPreference();
     }
 
+    @NonNull
     @Override
-    public BusStopHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BusStopHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         this.context = parent.getContext();
         View view = layoutInflater.inflate(R.layout.list_item_bus_stop, parent, false);
@@ -52,7 +54,7 @@ public class BusStopAdapter extends RecyclerView.Adapter<BusStopAdapter.BusStopH
     }
 
     @Override
-    public void onBindViewHolder(BusStopHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BusStopHolder holder, int position) {
         holder.bindBusStop(busStopsFilter.get(position));
     }
 
