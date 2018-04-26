@@ -62,13 +62,14 @@ public class Locator implements LocationListener {
         this.locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     }
 
+    @SuppressLint("MissingPermission")
     public void getLocation(Locator.Method method, Locator.Listener callback) {
         this.method = method;
         this.callback = callback;
         switch (this.method) {
             case NETWORK:
             case NETWORK_THEN_GPS:
-                @SuppressLint("MissingPermission") Location networkLocation = this.locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                Location networkLocation = this.locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 if (networkLocation != null) {
                     Log.d(LOG_TAG, "Last known location found for network provider : " + networkLocation.toString());
                     this.requestUpdates(LocationManager.NETWORK_PROVIDER);
@@ -79,7 +80,7 @@ public class Locator implements LocationListener {
                 }
                 break;
             case GPS:
-                @SuppressLint("MissingPermission") Location gpsLocation = this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                Location gpsLocation = this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if (gpsLocation != null) {
                     Log.d(LOG_TAG, "Last known location found for GPS provider : " + gpsLocation.toString());
                     this.requestUpdates(LocationManager.GPS_PROVIDER);
