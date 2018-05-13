@@ -73,7 +73,7 @@ public class SharedPreference {
             favorites = Arrays.asList(favoriteItems);
             favorites = new ArrayList<BusStopList.BusStop>(favorites);
         } else
-            return null;
+            return new ArrayList<>();
 
         return (ArrayList<BusStopList.BusStop>) favorites;
     }
