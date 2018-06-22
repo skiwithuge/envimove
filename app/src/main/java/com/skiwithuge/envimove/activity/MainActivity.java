@@ -1,6 +1,7 @@
 package com.skiwithuge.envimove.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,6 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.skiwithuge.envimove.fragment.AlertFragment;
 import com.skiwithuge.envimove.fragment.FavFragment;
 import com.skiwithuge.envimove.fragment.LineFragment;
@@ -120,6 +123,18 @@ public class MainActivity extends AppCompatActivity implements
         else
             mSharedPreference.removeFavorite(this, b);
 
+    }
+
+    public static boolean isGooglePlayServicesAvailable(Activity activity) {
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int status = googleApiAvailability.isGooglePlayServicesAvailable(activity);
+        if(status != ConnectionResult.SUCCESS) {
+            if(googleApiAvailability.isUserResolvableError(status)) {
+                googleApiAvailability.getErrorDialog(activity, status, 2404).show();
+            }
+            return false;
+        }
+        return true;
     }
 
 }

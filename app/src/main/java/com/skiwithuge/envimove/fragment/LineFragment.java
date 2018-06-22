@@ -2,7 +2,6 @@ package com.skiwithuge.envimove.fragment;
 
 import android.content.Context;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,13 +17,17 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.skiwithuge.envimove.Util.AndroidLocator;
+import com.skiwithuge.envimove.Util.GoogleLocator;
+import com.skiwithuge.envimove.Util.LocatorContext;
+import com.skiwithuge.envimove.activity.MainActivity;
 import com.skiwithuge.envimove.adapter.BusStopAdapter;
 import com.skiwithuge.envimove.interfaces.OnBusStopClickListener;
 import com.skiwithuge.envimove.interfaces.OnItemClickListener;
 import com.skiwithuge.envimove.model.BusStopList;
 import com.skiwithuge.envimove.MyApplication;
 import com.skiwithuge.envimove.R;
-import com.skiwithuge.envimove.Util.Locator;
+import com.skiwithuge.envimove.interfaces.Locator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -96,8 +99,15 @@ public class LineFragment extends Fragment implements OnItemClickListener<BusSto
     }
 
     private void updateUI() {
-        Locator lm = new Locator(this.getContext());
-        lm.getLocation(Locator.Method.NETWORK_THEN_GPS, new LineLocator());
+        LocatorContext lm;// = new LocatorContext(this.getContext());
+        if(MainActivity.isGooglePlayServicesAvailable(getActivity())){
+            lm = new LocatorContext(new GoogleLocator(this.getContext()));
+            lm.getLocation(GoogleLocator.PLAY_LOCATION, new LineLocator());
+        }else{
+            lm = new LocatorContext(new AndroidLocator(this.getContext()));
+            lm.getLocation(AndroidLocator.NETWORK_THEN_GPS, new LineLocator());
+        }
+
 
         if (mAdapter == null) {
             mAdapter = new BusStopAdapter(mList, this);
