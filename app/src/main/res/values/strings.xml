@@ -8,4 +8,5 @@
     <string name="title_settings">Settings</string>
     <string name="write_bus">Enter bus stop name…</string>
     <string name="menu_refresh">Refresh</string>
+    <string name="about">2018 - Orazio Scicolone</string>
 </resources>
